@@ -4,45 +4,23 @@ server:
 spring:
   cloud:
     gateway:
-      server:
-        webflux:
-          routes:
-            - id: Person
-              uri: http://localhost:8081
-              predicates:
-                - Path=/ServiceUsuario/Person/**
-              filters:
-                - name: RewritePath
-                  args:
-                    regexp: '/ServiceUsuario/Person(?<remaining>.*)'
-                    replacement: '/Servicio1/api/personas/${remaining}'
+      routes:
+        - id: aviones-route
+          uri: http://aviones-api:8000
+          predicates:
+            - Path=/ServiceAvion/**
+          filters:
+            - name: RewritePath
+              args:
+                regexp: "/ServiceAvion/(?<remaining>.*)"
+                replacement: "/${remaining}"
 
-            - id: User
-              uri: http://localhost:8081
-              predicates:
-                - Path=/ServiceUsuario/User/**
-              filters:
-                - name: RewritePath
-                  args:
-                    regexp: '/ServiceUsuario/User/(?<remaining>.*)'
-                    replacement: '/Servicio1/api/usuarios/${remaining}'
-
-            - id: Admin
-              uri: http://localhost:8081
-              predicates:
-                - Path=/ServiceUsuario/Admin/**
-              filters:
-                - name: RewritePath
-                  args:
-                    regexp: '/ServiceUsuario/Admin/(?<remaining>.*)'
-                    replacement: '/Servicio1/api/admins/${remaining}'
-
-            - id: Employee
-              uri: http://localhost:8081
-              predicates:
-                - Path=/ServiceUsuario/Employee/**
-              filters:
-                - name: RewritePath
-                  args:
-                    regexp: '/ServiceUsuario/Employee/(?<remaining>.*)'
-                    replacement: '/Servicio1/api/empleados/${remaining}'
+        - id: agente-ia-route
+          uri: http://api-mcp:5000
+          predicates:
+            - Path=/AgentIA/**
+          filters:
+            - name: RewritePath
+              args:
+                regexp: "/AgentIA/(?<remaining>.*)"
+                replacement: "/${remaining}"
