@@ -24,3 +24,53 @@ spring:
               args:
                 regexp: "/AgentIA/(?<remaining>.*)"
                 replacement: "/${remaining}"
+
+        - id: pagos-route
+          uri: http://microservice-pago:3000
+          predicates:
+            - Path=/ServicePago/**
+          filters:
+            - name: RewritePath
+              args:
+                regexp: "/ServicePago/(?<remaining>.*)"
+                replacement: "/pagos/${remaining}"
+
+        - id: reserva-route
+          uri: http://reserva-api:8080
+          predicates:
+            - Path=/ServiceReserva/**
+          filters:
+            - name: RewritePath
+              args:
+                regexp: "/ServiceReserva/(?<remaining>.*)"
+                replacement: "/${remaining}"
+
+        - id: mantenimiento-route
+          uri: http://mantenimiento-api:5000
+          predicates:
+            - Path=/ServiceMantenimiento/**
+          filters:
+            - name: RewritePath
+              args:
+                regexp: "/ServiceMantenimiento/(?<remaining>.*)"
+                replacement: "/api/${remaining}"
+
+        - id: usuarios-route
+          uri: http://usuarios-api:8081
+          predicates:
+            - Path=/ServiceUsuario/**
+          filters:
+            - name: RewritePath
+              args:
+                regexp: "/ServiceUsuario/(?<remaining>.*)"
+                replacement: "/Servicio1/${remaining}"
+
+        - id: notificaciones-route
+          uri: http://notificaciones-api:8080
+          predicates:
+            - Path=/ServiceNotificaciones/**
+          filters:
+            - name: RewritePath
+              args:
+                regexp: "/ServiceNotificaciones/(?<remaining>.*)"
+                replacement: "/ServicioNotificaciones/${remaining}"
